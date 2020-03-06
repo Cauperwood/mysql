@@ -576,38 +576,9 @@ INSERT INTO `users_communities` (`user_id`, `community_id`) VALUES ('8', '8');
 INSERT INTO `users_communities` (`user_id`, `community_id`) VALUES ('9', '9');
 INSERT INTO `users_communities` (`user_id`, `community_id`) VALUES ('10', '10');
 
--- задание 2
-
-select * from users
-order by firstname 
-
--- задание 3
-
-ALTER TABLE profiles DROP age;
-ALTER TABLE profiles add age INT NOT NULL DEFAULT 18;
-
-ALTER TABLE users DROP is_active;
-ALTER TABLE users add is_active BIT NOT NULL DEFAULT 1;
-
--- попытка №1
-
-SELECT user_id, age
-	CASE 
-		WHEN age < 18
-		THEN 0
-	END permission,
-FROM profiles;
-
--- попытка №2
-
--- INSERT INTO users (is_active) SELECT age FROM profiles WHERE age < '18' VALUES ('0');
--- SELECT user_id FROM profiles 
--- WHERE age < 18
--- INSERT INTO `users` (`is_active`) VALUES (0) where ;
-
--- Задание 4
 
 -- lesson_6 task_1
+-- Пусть задан некоторый пользователь. Из всех друзей этого пользователя найдите человека, который больше всех общался с нашим пользователем.
 
 INSERT INTO `messages` (`id`, `from_user_id`, `to_user_id`, `body`, `created_at`) 
 VALUES 
@@ -620,6 +591,15 @@ from messages
 WHERE to_user_id = 4
 GROUP BY from_user_id ORDER by cnt DESC limit 1 
 
+-- task_2
+-- Подсчитать общее количество лайков, которые получили пользователи младше 10 лет.
+
+
+SELECT count(*)
+FROM likes 
+WHERE media_id IN (
+	SELECT user_id FROM profiles WHERE TIMESTAMPDIFF(YEAR, birthday, NOW()) < 10	
+);
 
 
 
